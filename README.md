@@ -1,3 +1,11 @@
+Library Requirement
+--python3 global installation--
+#sudo pipx install mitmproxy
+#sudo apt install python3-pip -y
+#sudo apt install python3-sklearn python3-joblib
+
+
+
 To run this project
 
 We have to start the mitm by this command
