@@ -3,6 +3,8 @@ Library Requirement
 
 #sudo pipx install mitmproxy
 
+#pip install joblib
+
 #sudo apt install python3-pip -y
 
 #sudo apt install python3-sklearn python3-joblib
