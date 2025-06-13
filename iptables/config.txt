@@ -1,0 +1,29 @@
+1.setting up NAT
+
+a.) PREROUTING
+#iptables -t nat -A PREROUTING -i enp0s9 -p tcp --dport 80 -j REDIRECT --to-port 8080
+#iptables -t nat -A PREROUTING -i  enp0s9 -p tcp --dport 443 -j REDIRECT --to-port 8080 
+
+
+b.) POSTROUTING
+#iptables -t nat -A POSTROUTING -o enp0s3 -j MASQUERADE
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+2.setting up FILTER table
+a.)INPUT chain rule
+#iptables -A INPUT -i lo -j ACCEPT
+#iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+#iptables -A INPUT -p tcp --dport 8080 -j ACCEPT
+
+b.)FORWARD chain rule
+#iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+#iptables -A FORWARD -i enp0s9 -o enp0s3 -j ACCEPT
+
+c.)OUTPUT chain rule
+#iptables -A OUTPUT -o lo -j ACCEPT
+#iptables -A OUTPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+#iptables -A OUTPUT -p tcp -m multiport --dports 80,443 -j ACCEPT
+#iptables -A OUTPUT -p udp --dport 53 -j ACCEPT
+#iptables -A OUTPUT -p tcp --dport 53 -j ACCEPT
